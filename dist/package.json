@@ -1,0 +1,18 @@
+{
+  "name": "@my/lib",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/common": "^5.0.0"
+  },
+  "main": "bundles/my-lib.umd.js",
+  "module": "esm5/my-lib.js",
+  "es2015": "esm2015/my-lib.js",
+  "typings": "my-lib.d.ts",
+  "metadata": "my-lib.metadata.json",
+  "dependencies": {
+    "tslib": "^1.7.1"
+  }
+}

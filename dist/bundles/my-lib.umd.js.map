@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "file": "my-lib.umd.js",
+  "sources": [
+    "ng://@my/lib/out/index.ts",
+    "ng://@my/lib/out/auth-http.interceptor.ts"
+  ],
+  "sourcesContent": [
+    "import { NgModule, ModuleWithProviders, Provider } from '@angular/core';\nimport { HTTP_INTERCEPTORS } from '@angular/common/http';\n\nimport { AuthHttpInterceptor } from './auth-http.interceptor';\n\nexport * from './auth-http.interceptor';\n\nexport interface MyLibModuleConfig {\n  interceptor?: Provider;\n}\n\n@NgModule()\nexport class MyLibModule {\n  public static forRoot(config: MyLibModuleConfig = {}): ModuleWithProviders {\n    return {\n      ngModule: MyLibModule,\n      providers: [\n        config.interceptor || { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },\n      ]\n    };\n  }\n}\n",
+    "import { Injectable, Injector } from '@angular/core';\nimport { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';\nimport { Observable } from 'rxjs/Observable';\n\n@Injectable()\nexport class AuthHttpInterceptor implements HttpInterceptor {\n\n  constructor(\n    private injector: Injector\n  ) { }\n\n  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {\n    let newRequest = req.clone();\n    let token = 'get my token...';\n\n    newRequest = req.clone({\n      headers: req.headers.set('Authorization', `Bearer ${token}`)\n    });\n\n    return next.handle(newRequest);\n  }\n}\n"
+  ],
+  "names": [
+    "NgModule",
+    "HTTP_INTERCEPTORS",
+    "Injector",
+    "Injectable"
+  ],
+  "mappings": ";;;;;;ACAA,IAAA,mBAAA,kBAAA,YAAA;IAOE,SAAF,mBAAA,CACY,QADZ,EAAA;QACY,IAAZ,CAAA,QAAoB,GAAR,QAAQ,CAApB;KACO;IAEE,mBAAT,CAAA,SAAA,CAAA,SAAkB,GAAT,UAAU,GAAqB,EAAE,IAAiB,EAA3D;QACI,IAAI,UAAU,GAAG,GAAG,CAAC,KAAK,EAAE,CAAC;QAC7B,IAAI,KAAK,GAAG,iBAAiB,CAAC;QAE9B,UAAU,GAAG,GAAG,CAAC,KAAK,CAAC;YACrB,OAAO,EAAE,GAAG,CAAC,OAAO,CAAC,GAAG,CAAC,eAAe,EAAE,SAAhD,GAA0D,KAAO,CAAC;SAC7D,CAAC,CAAC;QAEH,OAAO,IAAI,CAAC,MAAM,CAAC,UAAU,CAAC,CAAC;;;;;IAfnC,EAAA,IAAA,EAACG,eAAU,EAAX;;;IAJA,EAAA,IAAA,EAAqBD,aAAQ,GAA7B;;ADYA,IAAA,WAAA,kBAAA,YAAA;IAAA,SAAA,WAAA,GAAA;;IACgB,WAAhB,CAAA,OAAuB,GAAd,UAAe,MAA8B,EAAtD;QAAwB,IAAxB,MAAA,KAAA,KAAA,CAAA,EAAwB,EAAA,MAAxB,GAAA,EAAsD,CAAtD,EAAA;QACI,OAAO;YACL,QAAQ,EAAE,WAAW;YACrB,SAAS,EAAE;gBACT,MAAM,CAAC,WAAW,IAAI,EAAE,OAAO,EAAED,sBAAiB,EAAE,QAAQ,EAAE,mBAAmB,EAAE,KAAK,EAAE,IAAI,EAAE;aACjG;SACF,CAAC;;;;;IARN,EAAA,IAAA,EAACD,aAAQ,EAAT;;;;;;;;;;;;;;;"
+}
