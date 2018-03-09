@@ -5,6 +5,7 @@
   "scripts": {
     "build": "ng-packagr -p lib/package.json"
   },
+  "main": "dist/bundles/my-lib.umd.js",
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
